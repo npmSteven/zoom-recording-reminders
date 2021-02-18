@@ -8,15 +8,16 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.post('/api/v1/notifications/meeting', (req, res) => {
-  const { method, path, status } = req.body;
-  console.log('body', req.body);
-  console.log('headers', req.headers);
-  console.log(`
-    Method: ${method}
-    Path: ${path}
-    Method: ${status}
-    Authorization: ${req.headers.authorization}
-  `);
+  if (req.body.event) return res.sendStatus(401);
+  const { event, payload } = req.body;
+  console.log('event', event);
+  console.log('payload', payload);
+  switch (event) {
+    case 'meeting.created': {
+
+    }
+  }
+  res.sendStatus(200);
 });
 
 app.listen(port, () => console.log(`Listening on PORT: ${port}`));
