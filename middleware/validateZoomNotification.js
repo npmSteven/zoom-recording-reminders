@@ -1,5 +1,7 @@
+const { zoomVerificationToken } = require('../config');
+
 module.exports.validateZoomNotification = (req, res, next) => {
   if (!req.body.event || !req.headers.authorization) return res.sendStatus(401);
-  console.log(req.headers.authorization);
-  res.sendStatus(200);
-}
+  if (req.headers.authorization !== zoomVerificationToken) return res.sendStatus(401);
+  next();
+};
